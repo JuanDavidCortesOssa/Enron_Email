@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../Desktop/TechnicalTestGO"
+		},
+		{
+			"path": "../Desktop/TechnicalTestCode/Enron-Email-DataSet-main"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "TechnicalTestGO"
+	}
+}
