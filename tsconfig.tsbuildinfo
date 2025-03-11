@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/models/email.model.ts","./src/models/emailrequest.model.ts","./src/utils/axios.ts","./src/app.vue","./src/components/pageheader.vue","./src/components/emailcontent.vue","./src/components/emailslist.vue","./src/components/pagination.vue","./src/components/searchbar.vue"],"version":"5.7.3"}

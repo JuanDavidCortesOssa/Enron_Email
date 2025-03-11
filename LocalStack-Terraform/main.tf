@@ -11,6 +11,10 @@ terraform {
   }
 }
 
+resource "docker_network" "app_network" {
+  name = "app_network"
+}
+
 provider "aws" {
   access_key                  = "mock_access_key"
   secret_key                  = "mock_secret_key"
@@ -35,22 +39,22 @@ resource "docker_image" "zincsearch" {
 resource "docker_container" "zincsearch" {
   name  = "zincsearch"
   image = docker_image.zincsearch.name
-
   ports {
     internal = 4080
     external = 4080
   }
-
   volumes {
     host_path      = "C:/Users/JUAN DAVID/Desktop/TechnicalTest/data"
     container_path = "/data"
   }
-
   env = [
     "ZINC_DATA_PATH=/data",
     "ZINC_FIRST_ADMIN_USER=admin",
     "ZINC_FIRST_ADMIN_PASSWORD=Complexpass#123"
   ]
+  networks_advanced {
+    name = docker_network.app_network.name
+  }
 }
 
 resource "docker_image" "email_server" {
@@ -71,6 +75,28 @@ resource "docker_container" "email_server" {
   }
   depends_on = [docker_container.zincsearch]
   networks_advanced {
-    name = "bridge"
+    name = docker_network.app_network.name
+  }
+}
+
+resource "docker_image" "vue_app" {
+  name         = "vue-app:latest"
+  build {
+    context    = ".."
+    dockerfile = "Dockerfile.vue"
+  }
+  keep_locally = true
+}
+
+resource "docker_container" "vue_app" {
+  name  = "vue-app"
+  image = docker_image.vue_app.name
+  ports {
+    internal = 80
+    external = 5173
+  }
+  depends_on = [docker_container.email_server]
+  networks_advanced {
+    name = docker_network.app_network.name
   }
 }
