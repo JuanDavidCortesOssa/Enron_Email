@@ -25,8 +25,8 @@ defineProps<Props>();
 
 <style scoped>
 .email-content-container {
-  max-height: calc(130vh - 8rem); /* Adjust height based on layout */
-  overflow-y: auto; /* Enable scrolling */
+  max-height: calc(130vh - 8rem); 
+  overflow-y: auto;
   padding: 1rem;
   background-color: #ffffff;
   border-radius: 0.5rem;

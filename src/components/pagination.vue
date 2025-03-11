@@ -1,4 +1,3 @@
-<!-- Pagination.vue -->
 <script setup lang="ts">
 defineProps<{
   emailsHeaderString: string;

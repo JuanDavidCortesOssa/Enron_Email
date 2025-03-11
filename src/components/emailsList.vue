@@ -9,13 +9,12 @@ interface Props {
 
 defineProps<Props>();
 
-// State for tracking selected email and content visibility
 const selectedEmail = ref<emailData | null>(null);
 const showEmailContent = ref(false);
 
 const handleEmailClick = (email: emailData) => {
   selectedEmail.value = email;
-  showEmailContent.value = true; // Show the email content panel
+  showEmailContent.value = true; 
 };
 </script>
 
