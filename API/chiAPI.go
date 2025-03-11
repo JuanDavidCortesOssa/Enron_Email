@@ -119,7 +119,7 @@ func ZincSearchPost(term string, from int) []byte {
 		"sort_fields": ["-Date"]
     }`, term, from)
 
-	req, err := http.NewRequest("POST", "http://localhost:4080/api/Enron_Data/_search", strings.NewReader(query))
+	req, err := http.NewRequest("POST", "http://zincsearch:4080/api/Enron_Data/_search", strings.NewReader(query))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func ZincSearchEmptyTermPost(from int) []byte {
 		"sort_fields": ["-Date"]
     }`, from)
 
-	req, err := http.NewRequest("POST", "http://localhost:4080/api/Enron_Data/_search", strings.NewReader(query))
+	req, err := http.NewRequest("POST", "http://zincsearch:4080/api/Enron_Data/_search", strings.NewReader(query))
 	if err != nil {
 		log.Fatal(err)
 	}
