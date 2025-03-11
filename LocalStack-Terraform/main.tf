@@ -92,7 +92,7 @@ resource "docker_container" "vue_app" {
   name  = "vue-app"
   image = docker_image.vue_app.name
   ports {
-    internal = 80
+    internal = 5173
     external = 5173
   }
   depends_on = [docker_container.email_server]
