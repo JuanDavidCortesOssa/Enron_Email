@@ -12,11 +12,8 @@ const emails = ref<emailData[]>([]);
 const emailsNumber = ref<number>(0);
 const emailsHeaderString = ref<string>("Initial value");
 const currentEmailNumber = ref<number>(0);
-const initialRequest: emailRequest = {
-  term: "example",
-  from: 0
-};
-const search = ref("example");
+
+const search = ref("");
 
 const fetchEmails = async (request: emailRequest) => {
   try {
@@ -48,7 +45,7 @@ const moveFromPage = (increaseValue: boolean) =>{
   }else{
     modifiedValue-= maxEmailsPerRequest;
   }
-  console.log(modifiedValue)
+  
   if(modifiedValue<0){
     modifiedValue = 0;
   }else if(modifiedValue>emailsNumber.value){
@@ -56,7 +53,7 @@ const moveFromPage = (increaseValue: boolean) =>{
   }
 
   currentEmailNumber.value = modifiedValue;
-  console.log(modifiedValue)
+  
   filterEmails();
 }
 
@@ -83,8 +80,7 @@ const handleSearch = (value: string) => {
 };
 
 onMounted(async ()=>{
-  await fetchEmails(initialRequest)
-  updateEmailsPageString()
+  filterEmails()
 })
 
 </script>
