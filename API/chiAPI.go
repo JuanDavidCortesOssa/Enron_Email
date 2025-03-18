@@ -50,7 +50,7 @@ func main() {
 	r.Use(middleware.Logger)
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedOrigins:   []string{"http://localhost:5173", "*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
@@ -85,6 +85,25 @@ func main() {
 
 		w.Header().Set("Content-Type", "application/json")
 		if err := json.NewEncoder(w).Encode(fullResponse); err != nil {
+			log.Println("Error encoding JSON response:", err)
+			http.Error(w, "Error generating response", http.StatusInternalServerError)
+		}
+	})
+
+	r.Post("/test", func(w http.ResponseWriter, r *http.Request) {
+		var requestBody struct {
+			Term string `json:"term"`
+			From int    `json:"from"`
+		}
+
+		if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+
+		if err := json.NewEncoder(w).Encode(requestBody); err != nil {
 			log.Println("Error encoding JSON response:", err)
 			http.Error(w, "Error generating response", http.StatusInternalServerError)
 		}
