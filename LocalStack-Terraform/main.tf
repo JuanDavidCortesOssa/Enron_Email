@@ -79,12 +79,20 @@ resource "docker_container" "email_server" {
   }
 }
 
+# resource "docker_image" "vue_app" {
+#   name         = "vue-app:latest"
+#   build {
+#     context    = ".."
+#     dockerfile = "Dockerfile"
+#   }
+#   keep_locally = true
+#   triggers = {
+#     rebuild = filemd5("../Dockerfile")
+#   }
+# }
+
 resource "docker_image" "vue_app" {
   name         = "vue-app:latest"
-  build {
-    context    = ".."
-    dockerfile = "Dockerfile.vue"
-  }
   keep_locally = true
 }
 
@@ -92,10 +100,9 @@ resource "docker_container" "vue_app" {
   name  = "vue-app"
   image = docker_image.vue_app.name
   ports {
-    internal = 5173
-    external = 5173
+    internal = 80   
+    external = 5173  
   }
-  depends_on = [docker_container.email_server]
   networks_advanced {
     name = docker_network.app_network.name
   }
